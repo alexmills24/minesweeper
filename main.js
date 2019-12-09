@@ -1,11 +1,17 @@
 const grid = document.getElementById("grid");
 
-//generates a 10x10 grid
+var mines = document.getElementById("mine-amount")
+var gridSize = document.getElementById("grid-size")
+
+startGame = () => {
+  generateGrid()
+}
+
 generateGrid = () => {
   grid.innerHTML = "";
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < gridSize.value; i++) {
     row = grid.insertRow(i);
-    for (let j = 0; j < 10; j++) {
+    for (let j = 0; j < gridSize.value; j++) {
       cell = row.insertCell(j);
       cell.onclick = function () {
         clickCell(this);
@@ -20,7 +26,7 @@ generateGrid = () => {
 
 //add mines randomly
 addMines = () => {
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < mines.value; i++) {
     let row = Math.floor(Math.random() * 10);
     let column = Math.floor(Math.random() * 10);
     let cell = grid.rows[row].cells[column];
@@ -82,5 +88,4 @@ clickCell = (cell) => {
     checkLevelCompletion();
   }
 }
-generateGrid();
 
