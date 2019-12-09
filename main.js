@@ -12,6 +12,7 @@ generateGrid = () => {
     row = grid.insertRow(i);
     for (let j = 0; j < gridSize.value; j++) {
       cell = row.insertCell(j);
+      cell.id = `cell-${i}-${j}`
       cell.onclick = function () {
         clickCell(this);
       };
@@ -88,3 +89,15 @@ clickCell = (cell) => {
   }
 }
 
+
+
+const setFlag = e => {
+  const element = document.getElementById(e.srcElement.id)
+  if (element.style.backgroundImage) {
+    element.style.backgroundImage = ""
+  } else {
+    element.style.backgroundImage = `url("./images/redflag.png")`
+  }
+}
+
+document.getElementById("grid").addEventListener("contextmenu", e => setFlag(e))
