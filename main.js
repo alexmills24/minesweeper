@@ -1,7 +1,6 @@
 const grid = document.getElementById("grid");
-
-var mines = document.getElementById("mine-amount")
-var gridSize = document.getElementById("grid-size")
+let mines = document.getElementById("mine-amount");
+let gridSize = document.getElementById("grid-size");
 
 startGame = () => {
   generateGrid()
@@ -61,7 +60,7 @@ checkLevelCompletion = () => {
 
 //allows user to click on the cells and checks if they have clicked a mine
 clickCell = (cell) => {
-  if (cell.getAttribute("data-mine") == "true") {
+  if (cell.getAttribute("data-mine") === "true") {
     revealMines();
     alert("Game Over");
   } else {
