@@ -27,8 +27,8 @@ generateGrid = () => {
 //add mines randomly
 addMines = () => {
   for (let i = 0; i < mines.value; i++) {
-    let row = Math.floor(Math.random() * 10);
-    let column = Math.floor(Math.random() * 10);
+    let row = Math.floor(Math.random() * mines.value);
+    let column = Math.floor(Math.random() * mines.value);
     let cell = grid.rows[row].cells[column];
     cell.setAttribute("data-mine", "true");
   }
@@ -36,8 +36,8 @@ addMines = () => {
 
 //highlights all mines in red
 revealMines = () => {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
+  for (let i = 0; i < mines.value; i++) {
+    for (let j = 0; j < mines.value; j++) {
       let cell = grid.rows[i].cells[j];
       if (cell.getAttribute("data-mine") == "true")
         cell.className = "mine";
@@ -47,8 +47,8 @@ revealMines = () => {
 
 checkLevelCompletion = () => {
   let levelComplete = true;
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
+  for (let i = 0; i < gridSize.value; i++) {
+    for (let j = 0; j < gridSize.value; j++) {
       if ((grid.rows[i].cells[j].getAttribute("data-mine") == "false") && (grid.rows[i].cells[j].innerHTML == ""))
         levelComplete = false
     }
@@ -70,16 +70,16 @@ clickCell = (cell) => {
     let mineCount = 0;
     let cellRow = cell.parentNode.rowIndex;
     let cellColumn = cell.cellIndex;
-    for (let i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) {
-      for (let j = Math.max(cellColumn - 1, 0); j <= Math.min(cellColumn + 1, 9); j++) {
+    for (let i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, gridSize.value - 1); i++) {
+      for (let j = Math.max(cellColumn - 1, 0); j <= Math.min(cellColumn + 1, gridSize.value - 1); j++) {
         if (grid.rows[i].cells[j].getAttribute("data-mine") == "true") mineCount++;
       }
     }
     cell.innerHTML = mineCount;
     if (mineCount == 0) {
       //Reveal all adjacent cells as they do not have a mine
-      for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) {
-        for (var j = Math.max(cellColumn - 1, 0); j <= Math.min(cellColumn + 1, 9); j++) {
+      for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, gridSize.value - 1); i++) {
+        for (var j = Math.max(cellColumn - 1, 0); j <= Math.min(cellColumn + 1, gridSize.value - 1); j++) {
           //Recursive Call
           if (grid.rows[i].cells[j].innerHTML == "") clickCell(grid.rows[i].cells[j]);
         }
