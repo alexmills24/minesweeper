@@ -26,20 +26,26 @@ generateGrid = () => {
 
 //add mines randomly
 addMines = () => {
-  for (let i = 0; i < mines.value; i++) {
-    let row = Math.floor(Math.random() * mines.value);
-    let column = Math.floor(Math.random() * mines.value);
+  let minesPlaced = 0;
+  while (minesPlaced < mines.value) {
+    let row = Math.floor(Math.random() * gridSize.value);
+    let column = Math.floor(Math.random() * gridSize.value);
     let cell = grid.rows[row].cells[column];
-    cell.setAttribute("data-mine", "true");
+    console.log(cell.getAttribute("data-mine"), cell)
+    if (cell.getAttribute("data-mine") === "false") {
+      cell.setAttribute("data-mine", "true");
+      minesPlaced++
+    }
+
   }
 }
 
 //highlights all mines in red
 revealMines = () => {
-  for (let i = 0; i < mines.value; i++) {
-    for (let j = 0; j < mines.value; j++) {
+  for (let i = 0; i < gridSize.value; i++) {
+    for (let j = 0; j < gridSize.value; j++) {
       let cell = grid.rows[i].cells[j];
-      if (cell.getAttribute("data-mine") == "true")
+      if (cell.getAttribute("data-mine") === "true")
         cell.className = "mine";
     }
   }
